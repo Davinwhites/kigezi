@@ -153,6 +153,10 @@ const Admin = () => {
           <input type="text" value={content.heroTitle || ''} onChange={e => handleContentChange('heroTitle', e.target.value)} />
         </div>
         <div className="form-group">
+          <label>Hero Background Image (URL)</label>
+          <input type="text" value={content.heroImageUrl || ''} onChange={e => handleContentChange('heroImageUrl', e.target.value)} placeholder="Paste any image link here..." />
+        </div>
+        <div className="form-group">
           <label>Hero Subtitle</label>
           <textarea value={content.heroSubtitle || ''} onChange={e => handleContentChange('heroSubtitle', e.target.value)}></textarea>
         </div>
@@ -209,6 +213,19 @@ const Admin = () => {
         <div className="form-group">
           <label>Highlight 3 Description</label>
           <textarea value={content.highlight3Desc || 'Discover local art, crafts, and traditional attire from talented Bakiga artists.'} onChange={e => handleContentChange('highlight3Desc', e.target.value)} rows="2"></textarea>
+        </div>
+      </section>
+
+      <section className="admin-section">
+        <h2>Custom Dynamic Section (Home Page)</h2>
+        <p style={{fontSize: '14px', color: '#666', marginBottom: '15px'}}>Fill these out to instantly add a brand new section to the Home Page.</p>
+        <div className="form-group">
+          <label>Custom Section Title</label>
+          <input type="text" value={content.customSectionTitle || ''} onChange={e => handleContentChange('customSectionTitle', e.target.value)} placeholder="e.g. Special Announcements" />
+        </div>
+        <div className="form-group">
+          <label>Custom Section Content</label>
+          <textarea value={content.customSectionContent || ''} onChange={e => handleContentChange('customSectionContent', e.target.value)} rows="4" placeholder="Enter the text for this new section..."></textarea>
         </div>
       </section>
 

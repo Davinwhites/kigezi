@@ -8,6 +8,7 @@ import './Home.css';
 const Home = () => {
   const [content, setContent] = useState({});
   const [recentMedia, setRecentMedia] = useState([]);
+  const [categoryMedia, setCategoryMedia] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,8 +22,17 @@ const Home = () => {
       .then(res => res.json())
       .then(data => {
         if(data.success) {
-          // Get the 3 most recent items
-          setRecentMedia(data.data.slice(0, 3));
+          const galleryData = data.data;
+          setRecentMedia(galleryData.slice(0, 3));
+          
+          // Find the latest image for each category
+          const catMedia = {};
+          const categories = ['performances', 'cuisine', 'art'];
+          categories.forEach(cat => {
+            const item = galleryData.find(img => img.category === cat);
+            if (item) catMedia[cat] = item.imageUrl;
+          });
+          setCategoryMedia(catMedia);
         }
       });
   }, []);
@@ -49,47 +59,83 @@ const Home = () => {
       <section className="highlights-section">
         <h2 className="section-title">Festival Highlights</h2>
         <div className="highlights-grid">
-          <motion.div className="highlight-card" whileHover={{ scale: 1.05 }}>
-            <div className="icon">💃</div>
-            <h3>{content.highlight1Title || 'Cultural Performances'}</h3>
-            <p>{content.highlight1Desc || 'Traditional music and dance including the Ekitagururo, enanga, and amadinda.'}</p>
-            <motion.button 
-              className="btn-primary" 
-              style={{marginTop: '1rem'}} 
-              whileTap={{ scale: 0.9 }} 
-              onClick={() => handleHighlightClick('performances')}
-            >
-              View Performances
-            </motion.button>
+          <motion.div className="highlight-card" style={{padding: categoryMedia['performances'] ? 0 : '2rem', overflow: 'hidden'}} whileHover={{ scale: 1.05 }}>
+            {categoryMedia['performances'] ? (
+              categoryMedia['performances'].match(/\.(mp4|mov|avi|webm)$/) || categoryMedia['performances'].includes('video/upload') ? (
+                <video src={categoryMedia['performances']} autoPlay loop muted playsInline style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              ) : (
+                <img src={categoryMedia['performances']} alt="Performances" style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              )
+            ) : <div className="icon">💃</div>}
+            <div style={{padding: categoryMedia['performances'] ? '20px' : '0'}}>
+              <h3>{content.highlight1Title || 'Cultural Performances'}</h3>
+              <p>{content.highlight1Desc || 'Traditional music and dance including the Ekitagururo, enanga, and amadinda.'}</p>
+              <motion.button 
+                className="btn-primary" 
+                style={{marginTop: '1rem'}} 
+                whileTap={{ scale: 0.9 }} 
+                onClick={() => handleHighlightClick('performances')}
+              >
+                View Performances
+              </motion.button>
+            </div>
           </motion.div>
-          <motion.div className="highlight-card" whileHover={{ scale: 1.05 }}>
-            <div className="icon">🍲</div>
-            <h3>{content.highlight2Title || 'Local Cuisine'}</h3>
-            <p>{content.highlight2Desc || 'Taste authentic dishes like Empengere and Eshabwe, bringing Kigezi to your plate.'}</p>
-            <motion.button 
-              className="btn-primary" 
-              style={{marginTop: '1rem'}} 
-              whileTap={{ scale: 0.9 }} 
-              onClick={() => handleHighlightClick('cuisine')}
-            >
-              Explore Cuisine
-            </motion.button>
+
+          <motion.div className="highlight-card" style={{padding: categoryMedia['cuisine'] ? 0 : '2rem', overflow: 'hidden'}} whileHover={{ scale: 1.05 }}>
+            {categoryMedia['cuisine'] ? (
+              categoryMedia['cuisine'].match(/\.(mp4|mov|avi|webm)$/) || categoryMedia['cuisine'].includes('video/upload') ? (
+                <video src={categoryMedia['cuisine']} autoPlay loop muted playsInline style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              ) : (
+                <img src={categoryMedia['cuisine']} alt="Cuisine" style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              )
+            ) : <div className="icon">🍲</div>}
+            <div style={{padding: categoryMedia['cuisine'] ? '20px' : '0'}}>
+              <h3>{content.highlight2Title || 'Local Cuisine'}</h3>
+              <p>{content.highlight2Desc || 'Taste authentic dishes like Empengere and Eshabwe, bringing Kigezi to your plate.'}</p>
+              <motion.button 
+                className="btn-primary" 
+                style={{marginTop: '1rem'}} 
+                whileTap={{ scale: 0.9 }} 
+                onClick={() => handleHighlightClick('cuisine')}
+              >
+                Explore Cuisine
+              </motion.button>
+            </div>
           </motion.div>
-          <motion.div className="highlight-card" whileHover={{ scale: 1.05 }}>
-            <div className="icon">🎨</div>
-            <h3>{content.highlight3Title || 'Art Exhibitions'}</h3>
-            <p>{content.highlight3Desc || 'Discover local art, crafts, and traditional attire from talented Bakiga artists.'}</p>
-            <motion.button 
-              className="btn-primary" 
-              style={{marginTop: '1rem'}} 
-              whileTap={{ scale: 0.9 }} 
-              onClick={() => handleHighlightClick('art')}
-            >
-              See Art
-            </motion.button>
+
+          <motion.div className="highlight-card" style={{padding: categoryMedia['art'] ? 0 : '2rem', overflow: 'hidden'}} whileHover={{ scale: 1.05 }}>
+            {categoryMedia['art'] ? (
+              categoryMedia['art'].match(/\.(mp4|mov|avi|webm)$/) || categoryMedia['art'].includes('video/upload') ? (
+                <video src={categoryMedia['art']} autoPlay loop muted playsInline style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              ) : (
+                <img src={categoryMedia['art']} alt="Art" style={{width: '100%', height: '200px', objectFit: 'cover'}} />
+              )
+            ) : <div className="icon">🎨</div>}
+            <div style={{padding: categoryMedia['art'] ? '20px' : '0'}}>
+              <h3>{content.highlight3Title || 'Art Exhibitions'}</h3>
+              <p>{content.highlight3Desc || 'Discover local art, crafts, and traditional attire from talented Bakiga artists.'}</p>
+              <motion.button 
+                className="btn-primary" 
+                style={{marginTop: '1rem'}} 
+                whileTap={{ scale: 0.9 }} 
+                onClick={() => handleHighlightClick('art')}
+              >
+                See Art
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </section>
+
+      {/* Custom Dynamic Section */}
+      {content.customSectionTitle && content.customSectionContent && (
+        <section className="highlights-section" style={{backgroundColor: '#fff'}}>
+          <h2 className="section-title">{content.customSectionTitle}</h2>
+          <div style={{maxWidth: '800px', margin: '0 auto', textAlign: 'center', fontSize: '1.2rem', lineHeight: '1.8', whiteSpace: 'pre-line'}}>
+            <p>{content.customSectionContent}</p>
+          </div>
+        </section>
+      )}
 
       {/* Recent Media Section */}
       {recentMedia.length > 0 && (
