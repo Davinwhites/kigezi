@@ -1,0 +1,42 @@
+{
+  "content": {
+    "heroTitle": "Tugyedane Kigezi Festival",
+    "heroSubtitle": "Experience the vibrant Baakisimba dance, local cuisine, and the rich heritage of the Bakiga.",
+    "aboutText": "Tugyedane Kigezi Festival, under the theme 'Celebrating Identity, Strengthening Unity', emphasizes cultural preservation, community unity, and socioeconomic empowerment.",
+    "twitter": "",
+    "instagram": "",
+    "facebook": "",
+    "tiktok": "",
+    "highlight2Desc": "Taste authentic dishes like Empengere,Emondi,Ebiribwa,Omugusha Obushera and bringing Kigezi to your plate."
+  },
+  "news": [
+    {
+      "id": "1777039534458",
+      "title": "tytt",
+      "content": "jj",
+      "imageUrl": "http://localhost:5000/uploads/1777039534401.jpeg",
+      "date": "4/24/2026"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "1",
+      "title": "Ekitagururo Dance",
+      "imageUrl": "/assets/performances.png",
+      "category": "performances"
+    },
+    {
+      "id": "2",
+      "title": "Empengere & Eshabwe",
+      "imageUrl": "/assets/cuisine.png",
+      "category": "cuisine"
+    },
+    {
+      "id": "3",
+      "title": "Traditional Crafts",
+      "imageUrl": "/assets/art.png",
+      "category": "art"
+    }
+  ],
+  "contacts": []
+}

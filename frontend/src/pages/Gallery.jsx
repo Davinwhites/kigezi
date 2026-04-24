@@ -1,0 +1,57 @@
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+import BackButton from '../components/BackButton';
+import API_URL from '../api';
+import './Gallery.css';
+
+const Gallery = () => {
+  const [images, setImages] = useState([]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const categoryFilter = searchParams.get('category');
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/gallery`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.success) {
+          let fetchedImages = data.data;
+          if (categoryFilter) {
+            fetchedImages = fetchedImages.filter(img => img.category === categoryFilter);
+          }
+          setImages(fetchedImages);
+        }
+      });
+  }, [categoryFilter]);
+
+  return (
+    <div className="gallery-container">
+      <BackButton />
+      <h1 className="section-title">
+        {categoryFilter ? `${categoryFilter.charAt(0).toUpperCase() + categoryFilter.slice(1)} Gallery` : 'Festival Gallery'}
+      </h1>
+      <p className="text-center subtitle">Relive the moments and vibrant colors of the Tugyedane Kigezi Festival.</p>
+      
+      <div className="gallery-grid">
+        {images.map((img, index) => (
+          <motion.div 
+            key={img.id} 
+            className="gallery-item"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: index * 0.1 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <img src={img.imageUrl} alt={img.title} />
+            <div className="gallery-overlay">
+              <span>{img.title}</span>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Gallery;

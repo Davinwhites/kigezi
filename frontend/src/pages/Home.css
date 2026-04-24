@@ -1,0 +1,103 @@
+.home-container {
+  width: 100%;
+}
+
+.hero-section {
+  height: 80vh;
+  min-height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 0 20px;
+  margin-top: -80px; /* Offset the navbar height */
+}
+
+.hero-content h1 {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  font-size: 1.1rem !important;
+  color: #ddd !important;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  font-weight: 400 !important;
+}
+
+.hero-btn {
+  font-size: 1.1rem;
+  padding: 15px 35px;
+}
+
+.highlights-section {
+  padding: 5rem 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.highlight-card {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.highlight-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(211, 47, 47, 0.1);
+  border-color: rgba(211, 47, 47, 0.2);
+}
+
+.highlight-card .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.highlight-card h3 {
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.highlight-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+@media screen and (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+}

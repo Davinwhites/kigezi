@@ -1,0 +1,131 @@
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 80px);
+  background: var(--light);
+}
+
+.admin-login-form {
+  background: #fff;
+  padding: 3rem;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.admin-login-form h2 {
+  text-align: center;
+  color: var(--dark);
+}
+
+.admin-login-form input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.admin-dashboard {
+  padding: 2rem 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.admin-section {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+.admin-section h2 {
+  margin-bottom: 1.5rem;
+  color: var(--primary);
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input, .form-group textarea, .admin-form input, .admin-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #fafafa;
+}
+
+.form-group input:focus, .form-group textarea:focus, .admin-form input:focus, .admin-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(211, 47, 47, 0.1);
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.admin-form input, .admin-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 18px 24px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.admin-list-item:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.admin-list-item button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contact-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}

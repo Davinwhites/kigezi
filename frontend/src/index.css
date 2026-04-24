@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --primary: #d32f2f; /* Deep Red */
+  --secondary: #ff8f00; /* Warm Orange/Earthy */
+  --dark: #121212; /* Rich Black */
+  --darker: #0a0a0a;
+  --light: #fdfbf7; /* Off white/cream */
+  --text: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: var(--light);
+  color: var(--text);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3, h4 {
+  font-weight: 800;
+  color: var(--dark);
+}
+
+.btn-primary {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary), #b71c1c);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.3);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--secondary), #f57c00);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 143, 0, 0.4);
+}
+
+.btn-primary:active, button:active {
+  transform: scale(0.95);
+}
+
+.page-container {
+  min-height: calc(100vh - 200px); /* Adjust based on navbar and footer */
+  padding-top: 80px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--dark);
+  position: relative;
+  display: inline-block;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 4px;
+  background-color: var(--primary);
+  border-radius: 2px;
+}
