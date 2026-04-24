@@ -284,6 +284,26 @@ const Admin = () => {
           <label>Office Address</label>
           <input type="text" value={content.address || 'Mbarara City, Kigezi Region, Uganda'} onChange={e => handleContentChange('address', e.target.value)} />
         </div>
+        <div className="form-group" style={{borderTop: '1px solid #eee', marginTop: '20px', paddingTop: '20px'}}>
+          <h3>Social Media Handles</h3>
+          <p style={{fontSize: '0.8rem', color: '#666'}}>Enter the username only (e.g. <strong>tugyendanekigezi</strong>)</p>
+        </div>
+        <div className="form-group">
+          <label>TikTok Username</label>
+          <input type="text" value={content.tiktok || 'tugyendanekigezi'} onChange={e => handleContentChange('tiktok', e.target.value)} placeholder="@tugyendanekigezi" />
+        </div>
+        <div className="form-group">
+          <label>Instagram Username</label>
+          <input type="text" value={content.instagram || 'tugyendanekigezi'} onChange={e => handleContentChange('instagram', e.target.value)} placeholder="tugyendanekigezi" />
+        </div>
+        <div className="form-group">
+          <label>Twitter/X Username</label>
+          <input type="text" value={content.twitter || 'TugyendaneKigezi'} onChange={e => handleContentChange('twitter', e.target.value)} placeholder="TugyendaneKigezi" />
+        </div>
+        <div className="form-group">
+          <label>Facebook Username/Page ID</label>
+          <input type="text" value={content.facebook || 'TugyendaneKigezi'} onChange={e => handleContentChange('facebook', e.target.value)} placeholder="TugyendaneKigezi" />
+        </div>
       </section>
 
       <section className="admin-section">
