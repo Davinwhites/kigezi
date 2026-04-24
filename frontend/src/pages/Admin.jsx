@@ -19,6 +19,9 @@ const Admin = () => {
   const [galleryForm, setGalleryForm] = useState({ title: '', category: 'general', imageFile: null });
   const [isUploading, setIsUploading] = useState(false);
   const [editingGalleryId, setEditingGalleryId] = useState(null);
+  
+  const [isUploadingNews, setIsUploadingNews] = useState(false);
+  const [editingNewsId, setEditingNewsId] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -80,18 +83,41 @@ const Admin = () => {
 
   const addNews = async (e) => {
     e.preventDefault();
+    setIsUploadingNews(true);
     const formData = new FormData();
     formData.append('title', newsForm.title);
     formData.append('content', newsForm.content);
     if (newsForm.imageFile) formData.append('image', newsForm.imageFile);
 
-    await fetch(`${API_URL}/api/news`, {
-      method: 'POST',
-      body: formData
-    });
-    setNewsForm({ title: '', content: '', imageFile: null });
-    document.getElementById('newsFileInput').value = '';
+    try {
+      if (editingNewsId) {
+        await fetch(`${API_URL}/api/news/${editingNewsId}`, {
+          method: 'PUT',
+          body: formData
+        });
+        setEditingNewsId(null);
+      } else {
+        await fetch(`${API_URL}/api/news`, {
+          method: 'POST',
+          body: formData
+        });
+      }
+      setNewsForm({ title: '', content: '', imageFile: null });
+      const fileInput = document.getElementById('newsFileInput');
+      if(fileInput) fileInput.value = '';
+      alert(editingNewsId ? 'News updated!' : 'News added!');
+    } catch (err) {
+      console.error(err);
+      alert('News upload failed!');
+    }
+    setIsUploadingNews(false);
     fetchData();
+  };
+
+  const handleEditNews = (n) => {
+    setEditingNewsId(n.id);
+    setNewsForm({ title: n.title, content: n.content, imageFile: null });
+    window.scrollTo({ top: document.getElementById('news-section').offsetTop, behavior: 'smooth' });
   };
 
   const deleteNews = async (id) => {
@@ -288,13 +314,18 @@ const Admin = () => {
         </div>
       </section>
 
-      <section className="admin-section">
+      <section className="admin-section" id="news-section">
         <h2>News Management</h2>
         <form onSubmit={addNews} className="admin-form">
           <input type="text" placeholder="News Title" value={newsForm.title} onChange={e => setNewsForm({...newsForm, title: e.target.value})} required />
-          <input type="file" id="newsFileInput" accept="image/*" onChange={e => setNewsForm({...newsForm, imageFile: e.target.files[0]})} />
+          <input type="file" id="newsFileInput" accept="image/*" onChange={e => setNewsForm({...newsForm, imageFile: e.target.files[0]})} required={!editingNewsId} />
           <textarea placeholder="News Content" value={newsForm.content} onChange={e => setNewsForm({...newsForm, content: e.target.value})} required></textarea>
-          <button type="submit" className="btn-primary">Add News</button>
+          <button type="submit" className="btn-primary" disabled={isUploadingNews}>
+            {isUploadingNews ? 'Uploading...' : (editingNewsId ? 'Update News' : 'Add News')}
+          </button>
+          {editingNewsId && (
+            <button type="button" className="btn-secondary" style={{padding: '12px 28px', borderRadius: '30px', marginLeft: '10px'}} onClick={() => { setEditingNewsId(null); setNewsForm({ title: '', content: '', imageFile: null }); }}>Cancel Edit</button>
+          )}
         </form>
         <div className="admin-list">
           {news.map(n => (
@@ -303,7 +334,10 @@ const Admin = () => {
                 {n.imageUrl && <img src={n.imageUrl} alt="preview" style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}} />}
                 <span>{n.title} ({n.date})</span>
               </div>
-              <button onClick={() => deleteNews(n.id)}>Delete</button>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button onClick={() => handleEditNews(n)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Edit</button>
+                <button onClick={() => deleteNews(n.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
