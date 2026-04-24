@@ -29,10 +29,17 @@ const Admin = () => {
         fetch(`${API_URL}/api/contact`)
       ]);
 
-      const contentData = await contentRes.json();
-      const newsData = await newsRes.json();
-      const galleryData = await galleryRes.json();
-      const contactsData = await contactsRes.json();
+      const [contentData, newsData, galleryData, contactsData] = await Promise.all([
+        contentRes.json(),
+        newsRes.json(),
+        galleryRes.json(),
+        contactsRes.json()
+      ]);
+
+      if (!contentRes.ok) console.error("Content fetch failed", contentData.error);
+      if (!newsRes.ok) console.error("News fetch failed", newsData.error);
+      if (!galleryRes.ok) console.error("Gallery fetch failed", galleryData.error);
+      if (!contactsRes.ok) console.error("Contacts fetch failed", contactsData.error);
 
       setContent(contentData.data || {});
       setNews(newsData.data || []);
@@ -101,26 +108,33 @@ const Admin = () => {
     if (galleryForm.imageFile) formData.append('image', galleryForm.imageFile);
 
     try {
+      let res;
       if (editingGalleryId) {
-        await fetch(`${API_URL}/api/gallery/${editingGalleryId}`, {
+        res = await fetch(`${API_URL}/api/gallery/${editingGalleryId}`, {
           method: 'PUT',
           body: formData
         });
-        setEditingGalleryId(null);
       } else {
-        await fetch(`${API_URL}/api/gallery`, {
+        res = await fetch(`${API_URL}/api/gallery`, {
           method: 'POST',
           body: formData
         });
       }
+      
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Server error occurred');
+      }
+      
+      setEditingGalleryId(null);
+      setGalleryForm({ title: '', category: 'general', imageFile: null });
+      if(document.getElementById('galleryFileInput')) document.getElementById('galleryFileInput').value = '';
+      alert(editingGalleryId ? 'Updated successfully!' : 'Added successfully!');
     } catch (err) {
       console.error(err);
-      alert('Upload failed!');
+      alert(`Upload failed: ${err.message}`);
     }
     
-    setGalleryForm({ title: '', category: 'general', imageFile: null });
-    const fileInput = document.getElementById('galleryFileInput');
-    if(fileInput) fileInput.value = '';
     setIsUploading(false);
     fetchData();
   };
