@@ -77,7 +77,7 @@ const About = () => {
           >
             <div className="card-icon">🎯</div>
             <h3>Our Purpose</h3>
-            <p>To preserve and celebrate the rich cultural heritage of the Bakiga while fostering unity and development within our community.</p>
+            <p>{content.aboutPurpose || "To preserve and celebrate the rich cultural heritage of the Bakiga while fostering unity and development within our community."}</p>
           </motion.div>
           <motion.div 
             className="vision-card"
@@ -88,7 +88,7 @@ const About = () => {
           >
             <div className="card-icon">🌍</div>
             <h3>Our Vision</h3>
-            <p>A globally connected Bakiga community that thrives on its identity, supports its artists, and empowers its future generations.</p>
+            <p>{content.aboutVision || "A globally connected Bakiga community that thrives on its identity, supports its artists, and empowers its future generations."}</p>
           </motion.div>
           <motion.div 
             className="vision-card"
@@ -99,7 +99,7 @@ const About = () => {
           >
             <div className="card-icon">🤝</div>
             <h3>Core Values</h3>
-            <p>Identity, Unity, Cultural Integrity, and Socioeconomic Empowerment.</p>
+            <p>{content.aboutValues || "Identity, Unity, Cultural Integrity, and Socioeconomic Empowerment."}</p>
           </motion.div>
         </div>
       </section>

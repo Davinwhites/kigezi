@@ -226,8 +226,20 @@ const Admin = () => {
           <textarea value={content.heroSubtitle || ''} onChange={e => handleContentChange('heroSubtitle', e.target.value)}></textarea>
         </div>
         <div className="form-group">
-          <label>About Text</label>
+          <label>About Us - Main Text</label>
           <textarea value={content.aboutText || ''} onChange={e => handleContentChange('aboutText', e.target.value)} rows="4"></textarea>
+        </div>
+        <div className="form-group">
+          <label>Our Purpose</label>
+          <textarea value={content.aboutPurpose || ''} onChange={e => handleContentChange('aboutPurpose', e.target.value)} rows="3"></textarea>
+        </div>
+        <div className="form-group">
+          <label>Our Vision</label>
+          <textarea value={content.aboutVision || ''} onChange={e => handleContentChange('aboutVision', e.target.value)} rows="3"></textarea>
+        </div>
+        <div className="form-group">
+          <label>Core Values</label>
+          <textarea value={content.aboutValues || ''} onChange={e => handleContentChange('aboutValues', e.target.value)} rows="2"></textarea>
         </div>
         <div className="form-group">
           <label>Event Overview List (one item per line)</label>
@@ -344,15 +356,18 @@ const Admin = () => {
       </section>
 
       <section className="admin-section" id="gallery-section">
-        <h2>Gallery Management</h2>
+        <h2>Gallery & Home Page Highlights</h2>
+        <div style={{background: '#f8f9fa', padding: '15px', borderRadius: '10px', marginBottom: '20px', border: '1px solid #dee2e6'}}>
+          <p style={{fontSize: '0.9rem', color: '#666', margin: 0}}><strong>Tip:</strong> The <strong>most recent</strong> image/video you add to each category will automatically appear as the highlight card on the Home Page.</p>
+        </div>
         <form onSubmit={addGallery} className="admin-form">
-          <input type="text" placeholder="Image/Video Title" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
+          <input type="text" placeholder="Media Title (e.g., Ekitagururo Dance)" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
           <input type="file" id="galleryFileInput" accept="image/*,video/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required={!editingGalleryId} />
           <select value={galleryForm.category} onChange={e => setGalleryForm({...galleryForm, category: e.target.value})} style={{padding: '10px', borderRadius: '5px', border: '1px solid #ccc'}}>
-            <option value="general">General</option>
-            <option value="performances">Performances</option>
-            <option value="cuisine">Cuisine</option>
-            <option value="art">Art</option>
+            <option value="general">General Gallery</option>
+            <option value="performances">Cultural Performances (Home Highlight)</option>
+            <option value="cuisine">Local Cuisine (Home Highlight)</option>
+            <option value="art">Art Exhibitions (Home Highlight)</option>
           </select>
           <button type="submit" className="btn-primary" disabled={isUploading}>
             {isUploading ? 'Uploading...' : (editingGalleryId ? 'Update Media' : 'Add Media')}
@@ -361,20 +376,32 @@ const Admin = () => {
             <button type="button" className="btn-secondary" style={{padding: '12px 28px', borderRadius: '30px', marginLeft: '10px'}} onClick={() => { setEditingGalleryId(null); setGalleryForm({ title: '', category: 'general', imageFile: null }); }}>Cancel Edit</button>
           )}
         </form>
-        <div className="admin-list">
-          {gallery.map(g => (
-            <div key={g.id} className="admin-list-item">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                {g.imageUrl && <img src={g.imageUrl} alt="preview" style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}} />}
-                <span>{g.title} ({g.category || 'general'})</span>
-              </div>
-              <div style={{ display: 'flex', gap: '10px' }}>
-                <button onClick={() => handleEditGallery(g)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Edit</button>
-                <button onClick={() => deleteGallery(g.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Delete</button>
-              </div>
+
+        {['performances', 'cuisine', 'art', 'general'].map(cat => (
+          <div key={cat} style={{marginTop: '20px'}}>
+            <h3 style={{textTransform: 'capitalize', borderBottom: '2px solid #ff8f00', paddingBottom: '5px'}}>{cat === 'general' ? 'General Gallery' : cat}</h3>
+            <div className="admin-list">
+              {gallery.filter(g => (g.category || 'general') === cat).length > 0 ? (
+                gallery.filter(g => (g.category || 'general') === cat).map(g => (
+                  <div key={g.id} className="admin-item">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                      {g.imageUrl && (
+                        g.imageUrl.endsWith('.mp4') || g.imageUrl.endsWith('.mov') ? 
+                        <div style={{width: '50px', height: '50px', background: '#000', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '10px'}}>VIDEO</div> :
+                        <img src={g.imageUrl} alt="preview" style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}} />
+                      )}
+                      <span>{g.title}</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <button onClick={() => handleEditGallery(g)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Edit</button>
+                      <button onClick={() => deleteGallery(g.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Delete</button>
+                    </div>
+                  </div>
+                ))
+              ) : <p style={{color: '#999', fontSize: '0.9rem'}}>No items in this category.</p>}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       <section className="admin-section">
