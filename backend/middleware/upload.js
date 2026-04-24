@@ -13,7 +13,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'kigezi_festival',
-    allowed_formats: ['jpg', 'png', 'jpeg', 'webp'],
+    allowed_formats: ['jpg', 'png', 'jpeg', 'webp', 'mp4', 'mov', 'avi'],
+    resource_type: 'auto',
   },
 });
 

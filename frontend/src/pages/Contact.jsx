@@ -1,15 +1,25 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import BackButton from '../components/BackButton';
 import API_URL from '../api';
 import './Contact.css';
 
 const Contact = () => {
+  const [content, setContent] = useState({});
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
   const [status, setStatus] = useState('');
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/content`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.success) setContent(data.data);
+      });
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,21 +65,21 @@ const Contact = () => {
             <span className="icon">📍</span>
             <div>
               <h3>Location</h3>
-              <p>Mbarara City, Kigezi Region, Uganda</p>
+              <p>{content.address || 'Mbarara City, Kigezi Region, Uganda'}</p>
             </div>
           </div>
           <div className="info-item">
             <span className="icon">📞</span>
             <div>
               <h3>Phone</h3>
-              <p>+256 700 000 000 (WhatsApp Available)</p>
+              <p>{content.contactPhone || '+256 700 000 000 (WhatsApp Available)'}</p>
             </div>
           </div>
           <div className="info-item">
             <span className="icon">✉️</span>
             <div>
               <h3>Email</h3>
-              <p>info@tugyedanekigezi.com</p>
+              <p>{content.contactEmail || 'info@tugyedanekigezi.com'}</p>
             </div>
           </div>
         </motion.div>

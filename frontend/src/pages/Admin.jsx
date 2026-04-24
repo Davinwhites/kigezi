@@ -127,7 +127,14 @@ const Admin = () => {
           <h2>Admin Login</h2>
           <input type="text" placeholder="Username" value={loginForm.username} onChange={e => setLoginForm({...loginForm, username: e.target.value})} required />
           <input type="password" placeholder="Password" value={loginForm.password} onChange={e => setLoginForm({...loginForm, password: e.target.value})} required />
-          <button type="submit" className="btn-primary">Login</button>
+          <motion.button 
+            type="submit" 
+            className="btn-primary"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Login
+          </motion.button>
         </motion.form>
       </div>
     );
@@ -160,6 +167,18 @@ const Admin = () => {
         <div className="form-group">
           <label>Location</label>
           <input type="text" value={content.location || 'Mbarara City'} onChange={e => handleContentChange('location', e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Contact Email</label>
+          <input type="email" value={content.contactEmail || 'info@tugyedanekigezi.com'} onChange={e => handleContentChange('contactEmail', e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Contact Phone</label>
+          <input type="text" value={content.contactPhone || '+256 700 000 000'} onChange={e => handleContentChange('contactPhone', e.target.value)} />
+        </div>
+        <div className="form-group">
+          <label>Office Address</label>
+          <input type="text" value={content.address || 'Mbarara City, Kigezi Region, Uganda'} onChange={e => handleContentChange('address', e.target.value)} />
         </div>
       </section>
 
@@ -237,8 +256,8 @@ const Admin = () => {
       <section className="admin-section">
         <h2>Gallery Management</h2>
         <form onSubmit={addGallery} className="admin-form">
-          <input type="text" placeholder="Image Title" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
-          <input type="file" id="galleryFileInput" accept="image/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required />
+          <input type="text" placeholder="Image/Video Title" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
+          <input type="file" id="galleryFileInput" accept="image/*,video/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required />
           <select value={galleryForm.category} onChange={e => setGalleryForm({...galleryForm, category: e.target.value})} style={{padding: '10px', borderRadius: '5px', border: '1px solid #ccc'}}>
             <option value="general">General</option>
             <option value="performances">Performances</option>

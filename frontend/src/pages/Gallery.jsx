@@ -43,7 +43,11 @@ const Gallery = () => {
             transition={{ delay: index * 0.1 }}
             whileHover={{ scale: 1.05 }}
           >
-            <img src={img.imageUrl} alt={img.title} />
+            {img.imageUrl.match(/\.(mp4|mov|avi|webm)$/) || img.imageUrl.includes('video/upload') ? (
+              <video src={img.imageUrl} controls className="gallery-video" />
+            ) : (
+              <img src={img.imageUrl} alt={img.title} />
+            )}
             <div className="gallery-overlay">
               <span>{img.title}</span>
             </div>

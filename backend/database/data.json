@@ -9,15 +9,7 @@
     "tiktok": "",
     "highlight2Desc": "Taste authentic dishes like Empengere,Emondi,Ebiribwa,Omugusha Obushera and bringing Kigezi to your plate."
   },
-  "news": [
-    {
-      "id": "1777039534458",
-      "title": "tytt",
-      "content": "jj",
-      "imageUrl": "http://localhost:5000/uploads/1777039534401.jpeg",
-      "date": "4/24/2026"
-    }
-  ],
+  "news": [],
   "gallery": [
     {
       "id": "1",
@@ -35,6 +27,18 @@
       "id": "3",
       "title": "Traditional Crafts",
       "imageUrl": "/assets/art.png",
+      "category": "art"
+    },
+    {
+      "id": "1777058332483",
+      "title": "yes",
+      "imageUrl": "http://localhost:5000/uploads/1777058332474.JPG",
+      "category": "general"
+    },
+    {
+      "id": "1777058366255",
+      "title": "eee",
+      "imageUrl": "http://localhost:5000/uploads/1777058366252.JPG",
       "category": "art"
     }
   ],

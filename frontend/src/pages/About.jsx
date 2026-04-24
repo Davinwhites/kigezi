@@ -13,20 +13,20 @@ const About = () => {
     fetch(`${API_URL}/api/content`)
       .then(res => res.json())
       .then(data => {
-        if(data.success) setContent(data.data);
+        if (data.success) setContent(data.data);
       });
 
     fetch(`${API_URL}/api/news`)
       .then(res => res.json())
       .then(data => {
-        if(data.success) setNews(data.data);
+        if (data.success) setNews(data.data);
       });
   }, []);
   return (
     <div className="about-container">
       <BackButton />
       <section className="about-header">
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="section-title"
@@ -37,7 +37,7 @@ const About = () => {
 
       <section className="about-content">
         <div className="about-grid">
-          <motion.div 
+          <motion.div
             className="about-text"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -48,7 +48,7 @@ const About = () => {
               {content.aboutText || "Tugyedane Kigezi Festival, under the theme 'Celebrating Identity, Strengthening Unity', emphasizes cultural preservation, community unity, and socioeconomic empowerment."}
             </p>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="about-text"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -56,34 +56,74 @@ const About = () => {
           >
             <h2>Event Overview</h2>
             <ul className="overview-list">
-              {(content.eventOverview || 'Performances: Traditional music and dance, such as the Ekitagururo, the enanga, and amadinda.\nArt Exhibitions: Displays of local art, crafts, and traditional attire, providing a platform for Bakiga artists.\nFood and Cuisine: Authentic local Kiga food like Empengere and Eshabwe.\nNetworking Opportunities: Spaces to connect, share experiences, and build relationships within the Bakiga diaspora.')
+              {(content.eventOverview || 'Performances: Traditional music and dance, such as the Ekitagururo, the enanga, and amadinda.\nArt Exhibitions: Displays of local art, crafts, and traditional attire, providing a platform for Bakiga artists.\nFood and Cuisine: Authentic local Kiga food like Empengere and Enturire, Obushere,Omugusha,Ebiribwa,Emondi.\nNetworking Opportunities: Spaces to connect, share experiences, and build relationships within the Bakiga diaspora.')
                 .split('\n')
                 .filter(item => item.trim() !== '')
                 .map((item, i) => (
                   <li key={i}>{item}</li>
-              ))}
+                ))}
             </ul>
             <p className="mt-4"><strong>Location:</strong> {content.location || 'Mbarara City'}</p>
+          </motion.div>
+        </div>
+
+        {/* Vision & Mission Section */}
+        <div className="vision-mission-grid">
+          <motion.div 
+            className="vision-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="card-icon">🎯</div>
+            <h3>Our Purpose</h3>
+            <p>To preserve and celebrate the rich cultural heritage of the Bakiga while fostering unity and development within our community.</p>
+          </motion.div>
+          <motion.div 
+            className="vision-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="card-icon">🌍</div>
+            <h3>Our Vision</h3>
+            <p>A globally connected Bakiga community that thrives on its identity, supports its artists, and empowers its future generations.</p>
+          </motion.div>
+          <motion.div 
+            className="vision-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <div className="card-icon">🤝</div>
+            <h3>Core Values</h3>
+            <p>Identity, Unity, Cultural Integrity, and Socioeconomic Empowerment.</p>
           </motion.div>
         </div>
       </section>
 
       <section className="news-section">
-        <h2 className="section-title">Latest News & Updates</h2>
-        <div className="news-container">
-          {news.length === 0 ? (
-            <p className="text-center">No news updates available at the moment.</p>
-          ) : (
-            news.map(n => (
-              <div key={n.id} className="news-card" style={{ marginBottom: '2rem' }}>
-                <img src={n.imageUrl || newsImg} alt={n.title} className="news-image" />
-                <div className="news-content">
-                  <h3>{n.title}</h3>
-                  <p className="news-date">{n.date}</p>
-                  <p style={{ whiteSpace: 'pre-line' }}>{n.content}</p>
-                </div>
+        <h2 className="section-title">Latest Festival News</h2>
+        <div className="news-list">
+          {news.length > 0 ? news.map(n => (
+            <motion.div 
+              key={n.id} 
+              className="news-card"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <img src={n.imageUrl || newsImg} alt={n.title} className="news-image" />
+              <div className="news-content">
+                <span className="news-date">{n.date}</span>
+                <h3>{n.title}</h3>
+                <p>{n.content}</p>
               </div>
-            ))
+            </motion.div>
+          )) : (
+            <p className="text-center">No news updates yet. Stay tuned!</p>
           )}
         </div>
       </section>

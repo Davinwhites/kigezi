@@ -1,34 +1,66 @@
 .admin-login-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 80px);
-  background: var(--light);
+  background: linear-gradient(-45deg, #0a0a0a, #1a1a1a, #2c0000, #000000);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  padding: 20px;
+  position: relative;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .admin-login-form {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
   padding: 3rem;
-  border-radius: 24px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  border-radius: 25px;
   width: 100%;
-  max-width: 420px;
+  max-width: 450px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  border: 1px solid rgba(0,0,0,0.05);
+  z-index: 10;
 }
 
 .admin-login-form h2 {
+  color: #fff;
   text-align: center;
-  color: var(--dark);
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
 .admin-login-form input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.admin-login-form input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 15px rgba(211, 47, 47, 0.2);
+}
+
+.admin-login-form button {
+  padding: 15px;
+  font-size: 1.2rem;
+  margin-top: 1rem;
 }
 
 .admin-dashboard {
