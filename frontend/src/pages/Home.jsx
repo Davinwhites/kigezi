@@ -7,6 +7,7 @@ import './Home.css';
 
 const Home = () => {
   const [content, setContent] = useState({});
+  const [recentMedia, setRecentMedia] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +16,15 @@ const Home = () => {
       .then(data => {
         if(data.success) setContent(data.data);
       });
+
+    fetch(`${API_URL}/api/gallery`)
+      .then(res => res.json())
+      .then(data => {
+        if(data.success) {
+          // Get the 3 most recent items
+          setRecentMedia(data.data.slice(0, 3));
+        }
+      });
   }, []);
 
   const handleHighlightClick = (routePath) => {
@@ -22,7 +32,7 @@ const Home = () => {
   };
   return (
     <div className="home-container">
-      <section className="hero-section" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${heroImg})` }}>
+      <section className="hero-section" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${content.heroImageUrl || heroImg})` }}>
         <motion.div 
           className="hero-content"
           initial={{ opacity: 0, y: 50 }}
@@ -80,6 +90,34 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Recent Media Section */}
+      {recentMedia.length > 0 && (
+        <section className="highlights-section" style={{paddingTop: '0'}}>
+          <h2 className="section-title">Latest Updates</h2>
+          <div className="highlights-grid">
+            {recentMedia.map((media, index) => (
+              <motion.div 
+                key={media.id} 
+                className="highlight-card"
+                style={{padding: 0, overflow: 'hidden'}}
+                whileHover={{ scale: 1.05 }}
+                onClick={() => handleHighlightClick('gallery')}
+                style={{cursor: 'pointer'}}
+              >
+                {media.imageUrl.match(/\.(mp4|mov|avi|webm)$/) || media.imageUrl.includes('video/upload') ? (
+                  <video src={media.imageUrl} autoPlay loop muted playsInline style={{width: '100%', height: '250px', objectFit: 'cover'}} />
+                ) : (
+                  <img src={media.imageUrl} alt={media.title} style={{width: '100%', height: '250px', objectFit: 'cover'}} />
+                )}
+                <div style={{padding: '20px'}}>
+                  <h3 style={{margin: 0}}>{media.title}</h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
