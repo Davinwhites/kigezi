@@ -121,8 +121,18 @@ const Admin = () => {
   };
 
   const deleteNews = async (id) => {
-    await fetch(`${API_URL}/api/news/${id}`, { method: 'DELETE' });
-    fetchData();
+    if (!window.confirm('Are you sure you want to delete this news?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/news/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('News deleted successfully!');
+        fetchData();
+      } else {
+        alert('Failed to delete news.');
+      }
+    } catch (err) {
+      alert('Network error while deleting news.');
+    }
   };
 
   const addGallery = async (e) => {
@@ -172,8 +182,18 @@ const Admin = () => {
   };
 
   const deleteGallery = async (id) => {
-    await fetch(`${API_URL}/api/gallery/${id}`, { method: 'DELETE' });
-    fetchData();
+    if (!window.confirm('Are you sure you want to delete this media?')) return;
+    try {
+      const res = await fetch(`${API_URL}/api/gallery/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('Media deleted successfully!');
+        fetchData();
+      } else {
+        alert('Failed to delete media.');
+      }
+    } catch (err) {
+      alert('Network error while deleting.');
+    }
   };
 
   if (!isAuthenticated) {
@@ -386,9 +406,9 @@ const Admin = () => {
                   <div key={g.id} className="admin-item">
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                       {g.imageUrl && (
-                        g.imageUrl.endsWith('.mp4') || g.imageUrl.endsWith('.mov') ? 
-                        <div style={{width: '50px', height: '50px', background: '#000', borderRadius: '5px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '10px'}}>VIDEO</div> :
-                        <img src={g.imageUrl} alt="preview" style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}} />
+                        g.imageUrl.endsWith('.mp4') || g.imageUrl.endsWith('.mov') || g.imageUrl.endsWith('.avi') ? 
+                        <video src={g.imageUrl} style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px'}} muted /> :
+                        <img src={g.imageUrl} alt="preview" style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px'}} />
                       )}
                       <span>{g.title}</span>
                     </div>

@@ -32,7 +32,11 @@ const Cuisine = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: index * 0.1 }}
           >
-            <img src={img.imageUrl} alt={img.title} />
+            {img.imageUrl.match(/\.(mp4|mov|avi|webm)$/) || img.imageUrl.includes('video/upload') ? (
+              <video src={img.imageUrl} controls className="gallery-video" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+            ) : (
+              <img src={img.imageUrl} alt={img.title} />
+            )}
             <div className="gallery-overlay">
               <h3>{img.title}</h3>
             </div>
