@@ -28,10 +28,45 @@ const Gallery = () => {
   return (
     <div className="gallery-container">
       <BackButton />
-      <h1 className="section-title">
-        {categoryFilter ? `${categoryFilter.charAt(0).toUpperCase() + categoryFilter.slice(1)} Gallery` : 'Festival Gallery'}
-      </h1>
+      <h1 className="section-title">Festival Gallery</h1>
       <p className="text-center subtitle">Relive the moments and vibrant colors of the Tugyedane Kigezi Festival.</p>
+      
+      <div className="gallery-tabs" style={{display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '30px', flexWrap: 'wrap'}}>
+        {['all', 'performances', 'cuisine', 'art', 'general'].map(cat => (
+          <button 
+            key={cat}
+            onClick={() => {
+              if (cat === 'all') {
+                window.history.pushState({}, '', '/gallery');
+                // Re-fetch all
+                fetch(`${API_URL}/api/gallery`)
+                  .then(res => res.json())
+                  .then(data => data.success && setImages(data.data));
+              } else {
+                window.history.pushState({}, '', `/gallery?category=${cat}`);
+                // Re-fetch filtered
+                fetch(`${API_URL}/api/gallery`)
+                  .then(res => res.json())
+                  .then(data => {
+                    if(data.success) setImages(data.data.filter(img => img.category === cat));
+                  });
+              }
+            }}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '25px',
+              border: 'none',
+              backgroundColor: (categoryFilter === cat || (!categoryFilter && cat === 'all')) ? '#ff8f00' : '#eee',
+              color: (categoryFilter === cat || (!categoryFilter && cat === 'all')) ? 'white' : '#333',
+              cursor: 'pointer',
+              textTransform: 'capitalize',
+              fontWeight: 'bold'
+            }}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
       
       <div className="gallery-grid">
         {images.map((img, index) => (

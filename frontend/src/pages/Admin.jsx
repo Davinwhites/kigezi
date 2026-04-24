@@ -135,12 +135,13 @@ const Admin = () => {
     }
   };
 
-  const addGallery = async (e) => {
+  const addGallery = async (e, categoryOverride = null) => {
     e.preventDefault();
     setIsUploading(true);
     const formData = new FormData();
+    const finalCategory = categoryOverride || galleryForm.category;
     formData.append('title', galleryForm.title);
-    formData.append('category', galleryForm.category);
+    formData.append('category', finalCategory);
     if (galleryForm.imageFile) formData.append('image', galleryForm.imageFile);
 
     try {
@@ -164,8 +165,10 @@ const Admin = () => {
       
       setEditingGalleryId(null);
       setGalleryForm({ title: '', category: 'general', imageFile: null });
-      if(document.getElementById('galleryFileInput')) document.getElementById('galleryFileInput').value = '';
-      alert(editingGalleryId ? 'Updated successfully!' : 'Added successfully!');
+      // Reset all file inputs
+      const fileInputs = document.querySelectorAll('input[type="file"]');
+      fileInputs.forEach(input => input.value = '');
+      alert('Media saved successfully!');
     } catch (err) {
       console.error(err);
       alert(`Upload failed: ${err.message}`);
@@ -376,49 +379,62 @@ const Admin = () => {
       </section>
 
       <section className="admin-section" id="gallery-section">
-        <h2>Gallery & Home Page Highlights</h2>
-        <div style={{background: '#f8f9fa', padding: '15px', borderRadius: '10px', marginBottom: '20px', border: '1px solid #dee2e6'}}>
-          <p style={{fontSize: '0.9rem', color: '#666', margin: 0}}><strong>Tip:</strong> The <strong>most recent</strong> image/video you add to each category will automatically appear as the highlight card on the Home Page.</p>
+        <h2>Post Media to Specific Pages</h2>
+        <div style={{background: '#fff3cd', padding: '15px', borderRadius: '10px', marginBottom: '20px', border: '1px solid #ffeeba'}}>
+          <p style={{fontSize: '0.9rem', color: '#856404', margin: 0}}><strong>Note:</strong> Use the specific boxes below to make sure your photos/videos go to the right page.</p>
         </div>
-        <form onSubmit={addGallery} className="admin-form">
-          <input type="text" placeholder="Media Title (e.g., Ekitagururo Dance)" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
-          <input type="file" id="galleryFileInput" accept="image/*,video/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required={!editingGalleryId} />
-          <select value={galleryForm.category} onChange={e => setGalleryForm({...galleryForm, category: e.target.value})} style={{padding: '10px', borderRadius: '5px', border: '1px solid #ccc'}}>
-            <option value="general">General Gallery</option>
-            <option value="performances">Cultural Performances (Home Highlight)</option>
-            <option value="cuisine">Local Cuisine (Home Highlight)</option>
-            <option value="art">Art Exhibitions (Home Highlight)</option>
-          </select>
-          <button type="submit" className="btn-primary" disabled={isUploading}>
-            {isUploading ? 'Uploading...' : (editingGalleryId ? 'Update Media' : 'Add Media')}
-          </button>
-          {editingGalleryId && (
-            <button type="button" className="btn-secondary" style={{padding: '12px 28px', borderRadius: '30px', marginLeft: '10px'}} onClick={() => { setEditingGalleryId(null); setGalleryForm({ title: '', category: 'general', imageFile: null }); }}>Cancel Edit</button>
-          )}
-        </form>
 
+        {/* Dynamic Category Forms */}
         {['performances', 'cuisine', 'art', 'general'].map(cat => (
-          <div key={cat} style={{marginTop: '20px'}}>
-            <h3 style={{textTransform: 'capitalize', borderBottom: '2px solid #ff8f00', paddingBottom: '5px'}}>{cat === 'general' ? 'General Gallery' : cat}</h3>
-            <div className="admin-list">
+          <div key={cat} style={{background: '#f8f9fa', padding: '20px', borderRadius: '10px', marginBottom: '30px', border: '1px solid #dee2e6'}}>
+            <h3 style={{textTransform: 'capitalize', color: '#ff8f00', marginBottom: '15px'}}>
+              {cat === 'performances' && '🎭 Cultural Performances Page'}
+              {cat === 'cuisine' && '🍲 Local Cuisine Page'}
+              {cat === 'art' && '🎨 Art Exhibitions Page'}
+              {cat === 'general' && '🖼️ General Gallery'}
+            </h3>
+            
+            <form onSubmit={(e) => addGallery(e, cat)} className="admin-form">
+              <input 
+                type="text" 
+                placeholder={`Title for ${cat}...`} 
+                value={editingGalleryId && galleryForm.category === cat ? galleryForm.title : (galleryForm.category === cat ? galleryForm.title : '')} 
+                onChange={e => { setGalleryForm({...galleryForm, title: e.target.value, category: cat}); }} 
+                required={galleryForm.category === cat || !galleryForm.category} 
+              />
+              <input 
+                type="file" 
+                accept="image/*,video/*" 
+                onChange={e => { setGalleryForm({...galleryForm, imageFile: e.target.files[0], category: cat}); }} 
+                required={(!editingGalleryId && galleryForm.category === cat)} 
+              />
+              <button type="submit" className="btn-primary" disabled={isUploading && galleryForm.category === cat}>
+                {(isUploading && galleryForm.category === cat) ? 'Uploading...' : (editingGalleryId && galleryForm.category === cat ? 'Update' : `Post to ${cat}`)}
+              </button>
+              {editingGalleryId && galleryForm.category === cat && (
+                <button type="button" className="btn-secondary" style={{padding: '12px 28px', borderRadius: '30px', marginLeft: '10px'}} onClick={() => { setEditingGalleryId(null); setGalleryForm({ title: '', category: 'general', imageFile: null }); }}>Cancel</button>
+              )}
+            </form>
+
+            <div className="admin-list" style={{marginTop: '15px'}}>
               {gallery.filter(g => (g.category || 'general') === cat).length > 0 ? (
-                gallery.filter(g => (g.category || 'general') === cat).map(g => (
-                  <div key={g.id} className="admin-item">
+                gallery.filter(g => (g.category || 'general') === cat).slice(0, 5).map(g => (
+                  <div key={g.id} className="admin-item" style={{padding: '10px', borderBottom: '1px solid #eee'}}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                       {g.imageUrl && (
-                        g.imageUrl.endsWith('.mp4') || g.imageUrl.endsWith('.mov') || g.imageUrl.endsWith('.avi') ? 
-                        <video src={g.imageUrl} style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px'}} muted /> :
-                        <img src={g.imageUrl} alt="preview" style={{width: '120px', height: '120px', objectFit: 'cover', borderRadius: '8px'}} />
+                        g.imageUrl.match(/\.(mp4|mov|avi|webm)$/) || g.imageUrl.includes('video/upload') ? 
+                        <video src={g.imageUrl} style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} muted /> :
+                        <img src={g.imageUrl} alt="preview" style={{width: '80px', height: '80px', objectFit: 'cover', borderRadius: '8px'}} />
                       )}
-                      <span>{g.title}</span>
+                      <span style={{fontSize: '0.9rem'}}>{g.title}</span>
                     </div>
                     <div style={{ display: 'flex', gap: '10px' }}>
-                      <button onClick={() => handleEditGallery(g)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Edit</button>
-                      <button onClick={() => deleteGallery(g.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Delete</button>
+                      <button onClick={() => handleEditGallery(g)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', fontSize: '0.8rem'}}>Edit</button>
+                      <button onClick={() => deleteGallery(g.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', fontSize: '0.8rem'}}>Delete</button>
                     </div>
                   </div>
                 ))
-              ) : <p style={{color: '#999', fontSize: '0.9rem'}}>No items in this category.</p>}
+              ) : <p style={{color: '#999', fontSize: '0.8rem'}}>Nothing posted here yet.</p>}
             </div>
           </div>
         ))}
