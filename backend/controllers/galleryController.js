@@ -41,4 +41,21 @@ const deleteImage = async (req, res) => {
     }
 };
 
-module.exports = { getImages, uploadImage, deleteImage };
+const updateImage = async (req, res) => {
+    try {
+        const { title, category } = req.body;
+        const updateData = { title, category };
+        if (req.file) {
+            updateData.imageUrl = req.file.path;
+        } else if (req.body.imageUrl) {
+            updateData.imageUrl = req.body.imageUrl;
+        }
+
+        const updatedImage = await Gallery.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        res.status(200).json({ success: true, data: { ...updatedImage._doc, id: updatedImage._id } });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
+
+module.exports = { getImages, uploadImage, deleteImage, updateImage };

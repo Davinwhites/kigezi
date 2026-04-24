@@ -17,6 +17,8 @@ const Admin = () => {
   // Forms
   const [newsForm, setNewsForm] = useState({ title: '', content: '', imageFile: null });
   const [galleryForm, setGalleryForm] = useState({ title: '', category: 'general', imageFile: null });
+  const [isUploading, setIsUploading] = useState(false);
+  const [editingGalleryId, setEditingGalleryId] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -92,18 +94,41 @@ const Admin = () => {
 
   const addGallery = async (e) => {
     e.preventDefault();
+    setIsUploading(true);
     const formData = new FormData();
     formData.append('title', galleryForm.title);
     formData.append('category', galleryForm.category);
     if (galleryForm.imageFile) formData.append('image', galleryForm.imageFile);
 
-    await fetch(`${API_URL}/api/gallery`, {
-      method: 'POST',
-      body: formData
-    });
+    try {
+      if (editingGalleryId) {
+        await fetch(`${API_URL}/api/gallery/${editingGalleryId}`, {
+          method: 'PUT',
+          body: formData
+        });
+        setEditingGalleryId(null);
+      } else {
+        await fetch(`${API_URL}/api/gallery`, {
+          method: 'POST',
+          body: formData
+        });
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed!');
+    }
+    
     setGalleryForm({ title: '', category: 'general', imageFile: null });
-    document.getElementById('galleryFileInput').value = '';
+    const fileInput = document.getElementById('galleryFileInput');
+    if(fileInput) fileInput.value = '';
+    setIsUploading(false);
     fetchData();
+  };
+
+  const handleEditGallery = (g) => {
+    setEditingGalleryId(g.id);
+    setGalleryForm({ title: g.title, category: g.category || 'general', imageFile: null });
+    window.scrollTo({ top: document.getElementById('gallery-section').offsetTop, behavior: 'smooth' });
   };
 
   const deleteGallery = async (id) => {
@@ -270,18 +295,23 @@ const Admin = () => {
         </div>
       </section>
 
-      <section className="admin-section">
+      <section className="admin-section" id="gallery-section">
         <h2>Gallery Management</h2>
         <form onSubmit={addGallery} className="admin-form">
           <input type="text" placeholder="Image/Video Title" value={galleryForm.title} onChange={e => setGalleryForm({...galleryForm, title: e.target.value})} required />
-          <input type="file" id="galleryFileInput" accept="image/*,video/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required />
+          <input type="file" id="galleryFileInput" accept="image/*,video/*" onChange={e => setGalleryForm({...galleryForm, imageFile: e.target.files[0]})} required={!editingGalleryId} />
           <select value={galleryForm.category} onChange={e => setGalleryForm({...galleryForm, category: e.target.value})} style={{padding: '10px', borderRadius: '5px', border: '1px solid #ccc'}}>
             <option value="general">General</option>
             <option value="performances">Performances</option>
             <option value="cuisine">Cuisine</option>
             <option value="art">Art</option>
           </select>
-          <button type="submit" className="btn-primary">Add Image</button>
+          <button type="submit" className="btn-primary" disabled={isUploading}>
+            {isUploading ? 'Uploading...' : (editingGalleryId ? 'Update Media' : 'Add Media')}
+          </button>
+          {editingGalleryId && (
+            <button type="button" className="btn-secondary" style={{padding: '12px 28px', borderRadius: '30px', marginLeft: '10px'}} onClick={() => { setEditingGalleryId(null); setGalleryForm({ title: '', category: 'general', imageFile: null }); }}>Cancel Edit</button>
+          )}
         </form>
         <div className="admin-list">
           {gallery.map(g => (
@@ -290,7 +320,10 @@ const Admin = () => {
                 {g.imageUrl && <img src={g.imageUrl} alt="preview" style={{width: '50px', height: '50px', objectFit: 'cover', borderRadius: '5px'}} />}
                 <span>{g.title} ({g.category || 'general'})</span>
               </div>
-              <button onClick={() => deleteGallery(g.id)}>Delete</button>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button onClick={() => handleEditGallery(g)} style={{backgroundColor: '#ff8f00', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Edit</button>
+                <button onClick={() => deleteGallery(g.id)} style={{backgroundColor: '#d32f2f', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer'}}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
