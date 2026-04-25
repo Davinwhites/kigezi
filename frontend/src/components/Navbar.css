@@ -1,8 +1,8 @@
 .navbar {
-  background: rgba(10, 10, 10, 0.9);
+  background: rgba(10, 10, 10, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  height: 120px;
+  height: 180px; /* Increased to fit stacked logo and menu */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,17 +11,19 @@
   top: 0;
   width: 100%;
   z-index: 999;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid var(--primary);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .nav-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Stack logo and menu */
+  justify-content: center;
   align-items: center;
   width: 100%;
   max-width: 1200px;
-  padding: 0 20px;
+  padding: 10px 20px;
+  gap: 15px;
 }
 
 .logo {
@@ -38,9 +40,10 @@
 
 .nav-menu {
   display: flex;
-  gap: 15px;
+  gap: 30px;
   list-style: none;
   text-align: center;
+  justify-content: center;
 }
 
 .nav-links {
