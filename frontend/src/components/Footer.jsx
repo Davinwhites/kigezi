@@ -17,7 +17,7 @@ const Footer = () => {
     if (!value) {
       switch(platform) {
         case 'twitter': return `https://twitter.com`;
-        case 'instagram': return `https://instagram.com`;
+        case 'instagram': return `https://www.instagram.com`;
         case 'facebook': return `https://facebook.com`;
         case 'tiktok': return `https://tiktok.com`;
         default: return "#";
@@ -27,7 +27,7 @@ const Footer = () => {
     let username = value.replace('@', '').trim();
     switch(platform) {
       case 'twitter': return `https://twitter.com/${username}`;
-      case 'instagram': return `https://instagram.com/${username}`;
+      case 'instagram': return `https://www.instagram.com/${username}/`;
       case 'facebook': return `https://facebook.com/${username}`;
       case 'tiktok': return `https://tiktok.com/@${username}`;
       default: return value;
