@@ -51,4 +51,13 @@ const updateNews = async (req, res) => {
     }
 };
 
+const deleteNews = async (req, res) => {
+    try {
+        await News.findByIdAndDelete(req.params.id);
+        res.status(200).json({ success: true, message: 'News deleted' });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
+
 module.exports = { getNews, addNews, deleteNews, updateNews };
