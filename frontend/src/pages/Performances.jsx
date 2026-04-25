@@ -12,7 +12,7 @@ const Performances = () => {
       .then(res => res.json())
       .then(data => {
         if(data.success) {
-          setImages(data.data.filter(img => img.category === 'performances'));
+          setImages(data.data.filter(img => img.category && img.category.toLowerCase().trim() === 'performances'));
         }
       });
   }, []);

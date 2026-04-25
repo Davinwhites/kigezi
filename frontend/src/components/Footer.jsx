@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import API_URL from '../api';
 import './Footer.css';
 
@@ -40,8 +41,23 @@ const Footer = () => {
       <div className="footer-container">
         <div className="footer-about">
           <h3>Tugyedane Kigezi</h3>
-          <p>Celebrating the vibrant culture, dance, and heritage of the Bakiga people. Join us for the ultimate cultural festival experience.</p>
+          <p>Celebrating the vibrant culture, dance, and heritage of the Bakiga people.</p>
+          <div className="footer-contact-info" style={{marginTop: '20px'}}>
+            <p><strong>📧 Email:</strong> <a href={`mailto:${content.contactEmail || 'tugyendanekigezifestival@gmail.com'}`} style={{color: '#fff', textDecoration: 'none'}}>{content.contactEmail || 'tugyendanekigezifestival@gmail.com'}</a></p>
+            <p><strong>📞 Phone:</strong> <a href="tel:0755121457" style={{color: '#fff', textDecoration: 'none'}}>0755121457</a>, <a href="tel:0704474746" style={{color: '#fff', textDecoration: 'none'}}>0704474746</a></p>
+          </div>
         </div>
+        
+        <div className="footer-links">
+          <h3>Navigation</h3>
+          <ul style={{listStyle: 'none', padding: 0}}>
+            <li><Link to="/" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Home</Link></li>
+            <li><Link to="/about" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>About Us</Link></li>
+            <li><Link to="/gallery" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Festival Gallery</Link></li>
+            <li><Link to="/contact" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Contact Us</Link></li>
+          </ul>
+        </div>
+
         <div className="footer-social">
           <h3>Follow Us</h3>
           <div className="social-icons">

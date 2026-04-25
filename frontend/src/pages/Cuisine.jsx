@@ -12,7 +12,7 @@ const Cuisine = () => {
       .then(res => res.json())
       .then(data => {
         if(data.success) {
-          setImages(data.data.filter(img => img.category === 'cuisine'));
+          setImages(data.data.filter(img => img.category && img.category.toLowerCase().trim() === 'cuisine'));
         }
       });
   }, []);

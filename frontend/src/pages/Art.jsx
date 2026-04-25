@@ -12,7 +12,8 @@ const Art = () => {
       .then(res => res.json())
       .then(data => {
         if(data.success) {
-          setImages(data.data.filter(img => img.category === 'art'));
+          // Case-insensitive filtering
+          setImages(data.data.filter(img => img.category && img.category.toLowerCase().trim() === 'art'));
         }
       });
   }, []);

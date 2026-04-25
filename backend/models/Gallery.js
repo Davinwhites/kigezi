@@ -9,6 +9,10 @@ const gallerySchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    category: {
+        type: String,
+        default: 'general'
+    }
 }, {
     timestamps: true,
 });
