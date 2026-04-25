@@ -14,7 +14,15 @@ const Footer = () => {
   }, []);
 
   const getSocialLink = (platform, value) => {
-    if (!value) return "#";
+    if (!value) {
+      switch(platform) {
+        case 'twitter': return `https://twitter.com`;
+        case 'instagram': return `https://instagram.com`;
+        case 'facebook': return `https://facebook.com`;
+        case 'tiktok': return `https://tiktok.com`;
+        default: return "#";
+      }
+    }
     if (value.startsWith('http')) return value;
     let username = value.replace('@', '').trim();
     switch(platform) {
