@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logoImg from '../assets/logo.jpg';
+import API_URL from '../api';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dynamicLogo, setDynamicLogo] = useState(null);
   const location = useLocation();
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/content`)
+      .then(res => res.json())
+      .then(data => data.success && data.data.siteLogo && setDynamicLogo(data.data.siteLogo));
+  }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -16,7 +24,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-container">
         <Link to="/" className="logo">
-          <img src={logoImg} alt="Tugyedane Kigezi Logo" className="logo-img" />
+          <img src={dynamicLogo || logoImg} alt="Tugyedane Kigezi Logo" className="logo-img" />
         </Link>
         
         <div className="mobile-icon" onClick={toggleMenu}>

@@ -40,6 +40,15 @@ const Home = () => {
   const handleHighlightClick = (routePath) => {
     navigate(`/${routePath}`);
   };
+
+  const displayRecentMedia = [...recentMedia];
+  if (content.siteLogo) {
+    displayRecentMedia.unshift({
+      id: 'logo-promo',
+      title: 'Our Official Festival Logo',
+      imageUrl: content.siteLogo
+    });
+  }
   return (
     <div className="home-container">
       <section className="hero-section" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(${content.heroImageUrl || heroImg})` }}>
@@ -51,7 +60,7 @@ const Home = () => {
         >
           <h1>{content.heroTitle || 'Tugyedane Kigezi Festival'}</h1>
           <p>Celebrating Identity, Strengthening Unity</p>
-          <p className="hero-subtitle">{content.heroSubtitle || 'Experience the vibrant Baakisimba dance, local cuisine, and the rich heritage of the Bakiga.'}</p>
+          <p className="hero-subtitle">{content.heroSubtitle || 'Experience the vibrant Ekitaguriro dance, local cuisine, and the rich heritage of the Bakiga.'}</p>
           <Link to="/about" className="btn-primary hero-btn">Join the Festival</Link>
         </motion.div>
       </section>
@@ -142,7 +151,7 @@ const Home = () => {
         <section className="highlights-section" style={{ paddingTop: '0' }}>
           <h2 className="section-title">Latest Updates</h2>
           <div className="highlights-grid">
-            {recentMedia.map((media, index) => (
+            {displayRecentMedia.map((media, index) => (
               <motion.div
                 key={media.id}
                 className="highlight-card"

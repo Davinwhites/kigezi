@@ -178,6 +178,30 @@ const Admin = () => {
     fetchData();
   };
 
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('key', 'siteLogo');
+
+    try {
+      const res = await fetch(`${API_URL}/api/content/upload-logo`, {
+        method: 'POST',
+        body: formData
+      });
+      if (res.ok) {
+        alert('Logo updated successfully!');
+        fetchData();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+    setIsUploading(false);
+  };
+
   const handleEditGallery = (g) => {
     setEditingGalleryId(g.id);
     setGalleryForm({ title: g.title, category: g.category || 'general', imageFile: null });
@@ -303,6 +327,15 @@ const Admin = () => {
         <div className="form-group">
           <label>Facebook Username/Page ID</label>
           <input type="text" value={content.facebook || 'TugyendaneKigezi'} onChange={e => handleContentChange('facebook', e.target.value)} placeholder="TugyendaneKigezi" />
+        </div>
+        
+        <div className="form-group" style={{borderTop: '1px solid #eee', marginTop: '20px', paddingTop: '20px'}}>
+          <h3>Festival Logo</h3>
+          <p style={{fontSize: '0.8rem', color: '#666'}}>Upload the official logo to be featured in Gallery & News.</p>
+          <div style={{display: 'flex', alignItems: 'center', gap: '20px', marginTop: '10px'}}>
+            {content.siteLogo && <img src={content.siteLogo} alt="Current Logo" style={{height: '60px', borderRadius: '5px', background: '#333', padding: '5px'}} />}
+            <input type="file" accept="image/*" onChange={handleLogoUpload} disabled={isUploading} />
+          </div>
         </div>
       </section>
 

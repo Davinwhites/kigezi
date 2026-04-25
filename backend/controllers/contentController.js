@@ -27,4 +27,19 @@ const updateContent = async (req, res) => {
     }
 };
 
-module.exports = { getAllContent, updateContent };
+const uploadLogo = async (req, res) => {
+    try {
+        if (!req.file) throw new Error('No logo file uploaded');
+        const key = req.body.key || 'siteLogo';
+        await Content.findOneAndUpdate(
+            { key },
+            { value: req.file.path },
+            { upsert: true, new: true }
+        );
+        res.status(200).json({ success: true, url: req.file.path });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
+
+module.exports = { getAllContent, updateContent, uploadLogo };
