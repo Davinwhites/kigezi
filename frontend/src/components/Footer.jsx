@@ -24,7 +24,8 @@ const Footer = () => {
       }
     }
     if (value.startsWith('http')) return value;
-    let username = value.replace('@', '').trim();
+    // Clean the value: remove spaces and @, then lowercase
+    let username = value.replace('@', '').replace(/\s/g, '').toLowerCase().trim();
     switch(platform) {
       case 'twitter': return `https://twitter.com/${username}`;
       case 'instagram': return `https://www.instagram.com/${username}/`;
