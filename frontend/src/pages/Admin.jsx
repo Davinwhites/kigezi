@@ -274,11 +274,11 @@ const Admin = () => {
         </div>
         <div className="form-group">
           <label>Contact Email</label>
-          <input type="email" value={content.contactEmail || 'info@tugyedanekigezi.com'} onChange={e => handleContentChange('contactEmail', e.target.value)} />
+          <input type="email" value={content.contactEmail || 'tugyendanekigezifestival@gmail.com'} onChange={e => handleContentChange('contactEmail', e.target.value)} />
         </div>
         <div className="form-group">
           <label>Contact Phone</label>
-          <input type="text" value={content.contactPhone || '+256 700 000 000'} onChange={e => handleContentChange('contactPhone', e.target.value)} />
+          <input type="text" value={content.contactPhone || '0755121457'} onChange={e => handleContentChange('contactPhone', e.target.value)} />
         </div>
         <div className="form-group">
           <label>Office Address</label>

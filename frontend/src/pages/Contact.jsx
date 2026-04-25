@@ -72,14 +72,14 @@ const Contact = () => {
             <span className="icon">📞</span>
             <div>
               <h3>Phone</h3>
-              <p>{content.contactPhone || '+256 700 000 000 (WhatsApp Available)'}</p>
+              <p><a href={`tel:${content.contactPhone || '0755121457'}`} style={{color: 'inherit', textDecoration: 'none'}}>{content.contactPhone || '0755121457'}</a></p>
             </div>
           </div>
           <div className="info-item">
             <span className="icon">✉️</span>
             <div>
               <h3>Email</h3>
-              <p>{content.contactEmail || 'info@tugyedanekigezi.com'}</p>
+              <p><a href={`mailto:${content.contactEmail || 'tugyendanekigezifestival@gmail.com'}`} style={{color: 'inherit', textDecoration: 'none'}}>{content.contactEmail || 'tugyendanekigezifestival@gmail.com'}</a></p>
             </div>
           </div>
         </motion.div>
