@@ -49,11 +49,20 @@ const Footer = () => {
         </div>
         
         <div className="footer-links">
-          <h3>Navigation</h3>
+          <h3>Festival Highlights</h3>
+          <ul style={{listStyle: 'none', padding: 0}}>
+            <li><Link to="/performances" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Cultural Performances</Link></li>
+            <li><Link to="/cuisine" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Local Cuisine</Link></li>
+            <li><Link to="/art" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Art Exhibitions</Link></li>
+          </ul>
+        </div>
+        
+        <div className="footer-links">
+          <h3>Quick Links</h3>
           <ul style={{listStyle: 'none', padding: 0}}>
             <li><Link to="/" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Home</Link></li>
             <li><Link to="/about" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>About Us</Link></li>
-            <li><Link to="/gallery" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Festival Gallery</Link></li>
+            <li><Link to="/gallery" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Main Gallery</Link></li>
             <li><Link to="/contact" style={{color: '#fff', textDecoration: 'none', lineHeight: '2'}}>Contact Us</Link></li>
           </ul>
         </div>
