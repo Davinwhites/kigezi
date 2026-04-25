@@ -60,7 +60,7 @@ const Home = () => {
         >
           <h1>{content.heroTitle || 'Tugyedane Kigezi Festival'}</h1>
           <p>Celebrating Identity, Strengthening Unity</p>
-          <p className="hero-subtitle">{content.heroSubtitle || 'Experience the vibrant Ekitaguriro dance, local cuisine, and the rich heritage of the Bakiga.'}</p>
+          <p className="hero-subtitle">{content.heroSubtitle || 'Experience the vibrant Kakitaari dance, local cuisine, and the rich heritage of the Bakiga.'}</p>
           <Link to="/about" className="btn-primary hero-btn">Join the Festival</Link>
         </motion.div>
       </section>
