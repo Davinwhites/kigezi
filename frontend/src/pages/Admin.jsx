@@ -340,36 +340,6 @@ const Admin = () => {
       </section>
 
       <section className="admin-section">
-        <h2>Home Page Highlights</h2>
-        <div className="form-group">
-          <label>Highlight 1 Title (e.g. Performances)</label>
-          <input type="text" value={content.highlight1Title || 'Cultural Performances'} onChange={e => handleContentChange('highlight1Title', e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Highlight 1 Description</label>
-          <textarea value={content.highlight1Desc || 'Traditional music and dance including the Ekitagururo, enanga, and amadinda.'} onChange={e => handleContentChange('highlight1Desc', e.target.value)} rows="2"></textarea>
-        </div>
-        
-        <div className="form-group">
-          <label>Highlight 2 Title (e.g. Cuisine)</label>
-          <input type="text" value={content.highlight2Title || 'Local Cuisine'} onChange={e => handleContentChange('highlight2Title', e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Highlight 2 Description</label>
-          <textarea value={content.highlight2Desc || 'Taste authentic dishes like Empengere and Eshabwe, bringing Kigezi to your plate.'} onChange={e => handleContentChange('highlight2Desc', e.target.value)} rows="2"></textarea>
-        </div>
-
-        <div className="form-group">
-          <label>Highlight 3 Title (e.g. Art)</label>
-          <input type="text" value={content.highlight3Title || 'Art Exhibitions'} onChange={e => handleContentChange('highlight3Title', e.target.value)} />
-        </div>
-        <div className="form-group">
-          <label>Highlight 3 Description</label>
-          <textarea value={content.highlight3Desc || 'Discover local art, crafts, and traditional attire from talented Bakiga artists.'} onChange={e => handleContentChange('highlight3Desc', e.target.value)} rows="2"></textarea>
-        </div>
-      </section>
-
-      <section className="admin-section">
         <h2>Custom Dynamic Section (Home Page)</h2>
         <p style={{fontSize: '14px', color: '#666', marginBottom: '15px'}}>Fill these out to instantly add a brand new section to the Home Page.</p>
         <div className="form-group">
