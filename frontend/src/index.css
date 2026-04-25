@@ -73,8 +73,8 @@ h1, h2, h3, h4 {
 }
 
 .page-container {
-  min-height: calc(100vh - 200px); /* Adjust based on navbar and footer */
-  padding-top: 80px;
+  min-height: calc(100vh - 200px);
+  padding-top: 180px; /* Match new navbar height */
 }
 
 .section-title {
