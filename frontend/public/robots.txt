@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and private pages
+Disallow: /admin
+
+# Host and Sitemap
+Sitemap: https://www.tugyendanekigezi.com/sitemap.xml
+Host: https://www.tugyendanekigezi.com
