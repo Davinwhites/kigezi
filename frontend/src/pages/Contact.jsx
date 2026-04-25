@@ -73,6 +73,7 @@ const Contact = () => {
             <div>
               <h3>Phone</h3>
               <p><a href={`tel:${content.contactPhone || '0755121457'}`} style={{color: 'inherit', textDecoration: 'none'}}>{content.contactPhone || '0755121457'}</a></p>
+              <p><a href={`tel:0704474746`} style={{color: 'inherit', textDecoration: 'none'}}>0704474746</a></p>
             </div>
           </div>
           <div className="info-item">

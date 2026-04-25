@@ -301,8 +301,8 @@ const Admin = () => {
           <input type="email" value={content.contactEmail || 'tugyendanekigezifestival@gmail.com'} onChange={e => handleContentChange('contactEmail', e.target.value)} />
         </div>
         <div className="form-group">
-          <label>Contact Phone</label>
-          <input type="text" value={content.contactPhone || '0755121457'} onChange={e => handleContentChange('contactPhone', e.target.value)} />
+          <label>Contact Phone (comma separated for multiple)</label>
+          <input type="text" value={content.contactPhone || '0755121457, 0704474746'} onChange={e => handleContentChange('contactPhone', e.target.value)} />
         </div>
         <div className="form-group">
           <label>Office Address</label>
