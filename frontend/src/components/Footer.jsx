@@ -17,10 +17,10 @@ const Footer = () => {
   const getSocialLink = (platform, value) => {
     if (!value) {
       switch(platform) {
-        case 'twitter': return `https://twitter.com`;
-        case 'instagram': return `https://www.instagram.com`;
-        case 'facebook': return `https://facebook.com`;
-        case 'tiktok': return `https://tiktok.com`;
+        case 'twitter': return `https://twitter.com/TugyendaneKigezi`;
+        case 'instagram': return `https://www.instagram.com/tugyendanekigezi/`;
+        case 'facebook': return `https://facebook.com/TugyendaneKigezi`;
+        case 'tiktok': return `https://tiktok.com/@tugyendanekigezi`;
         default: return "#";
       }
     }
